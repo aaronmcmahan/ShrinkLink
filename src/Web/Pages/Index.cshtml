@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="d-flex align-items-center">
+    <section class="py-lg-14 py-12 bg-cover w-100 m-auto">
+        <div class="container">
+            <div class="align-items-center row">
+                <div class="col-lg-6 offset-md-3">
+                    <div>
+                        <div class=" text-center text-md-start ">
+                            <h1 class=" display-2 fw-bold  mb-3">Shrink Link</h1>
+                            <p class="lead">
+                                Enter a long link and get a short link that is easily shareable.
+                            </p>
+                        </div>
+                        <div class="mt-8">
+                            <div class="bg-white rounded-md-pill shadow rounded-3 mb-4">
+                                <div class="p-md-2 p-4">
+                                    <form class="row g-1" method="post">
+                                        <div class="col-md-9 col-sm-12">
+                                            <div class="input-group">
+                                                <input asp-for="FullUrl" placeholder="Paste a long URL"
+                                                    class="rounded-pill border-0 ps-3 form-focus-none form-control form-control-lg">
+                                                <span asp-validation-for="FullUrl"></span>
+                                            </div>
+                                        </div>
+                                        <div class="text-end d-grid col-md-3 col-sm-12">
+                                            <button type="submit" class="rounded-pill btn btn-lg btn-primary">
+                                                Shrink!
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            @if (@Model.Link is not null)
+                            {
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <a id="computed-link" class="fs-6 text-decoration-none"
+                                                    href="@Model.ComputedUrl" target="_blank">
+                                                    @Model.ComputedUrl
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <button type="button" class="btn btn-clipboard" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" data-bs-title="Copy to clipboard">
+                                                    <i class="bi bi-clipboard"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

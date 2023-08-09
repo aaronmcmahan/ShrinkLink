@@ -1,0 +1,20 @@
+@media (min-width: 768px) {
+  .py-md-20 {
+    padding-bottom: 9.5rem !important;
+    padding-top: 9.5rem !important;
+  }
+}
+
+.bg-cover {
+  background: no-repeat 50%/cover;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.py-lg-14 {
+  padding-bottom: 6.5rem !important;
+  padding-top: 6.5rem !important;
+}
+
+.rounded-pill {
+  border-radius: 50rem !important;
+}
