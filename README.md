@@ -1,56 +1,16 @@
-![CI](https://github.com/jbogard/ContosoUniversityDotNetCore-Pages/workflows/CI/badge.svg)
+# ShrinkLink on ASP.NET Core 7.0 on .NET 6 and Razor Pages
 
-# ContosoUniversity on ASP.NET Core 6.0 on .NET 6 and Razor Pages
+ShrinkLink is a demo URL shortener simular to Bitly. You can 
 
-Contoso University, the way I would write it.
+![alt text](http://url/to/img.png)
 
-This example requires some tools and PowerShell modules, you should run `setup.cmd` or `setup.ps1` to install them.
+## Tech stack
+ - .NET 7
+ - SQLite
+ - Entity Framework Core
+ - Razor Pages
+ - Minimal APIs
 
-To prepare the database, execute the build script using [PSake](https://psake.readthedocs.io/): `psake migrate`. Open the solution and run!
 
-## Things demonstrated
 
-- CQRS and MediatR
-- AutoMapper
-- Vertical slice architecture
-- Razor Pages
-- Fluent Validation
-- HtmlTags
-- Entity Framework Core
 
-## Migrating the Database
-
-Grate will automatically create or upgrade (migrate) the database to the latest schema version when you run it:
-
-From PowerShell:
-```
-invoke-psake migrate
-```
-
-From CMD:
-```
-psake migrate
-```
-
-When running unit tests, you can recreate the unit test database using:
-
-```
-invoke-psake migratetest
-```
-
-## Versioning
-
-Version numbers can be passed on the build script command line:
-
-From PowerShell:
-```
-invoke-psake CI -properties ${'version':'1.2.3-dev.5'}
-```
-
-Because we're passing a PowerShell dictionary on the command line, the cmd script doesn't handle this very nicely.
-
-Or generate a version using [GitVersion](https://gitversion.net/docs/) locally:
-```
-psake localversion
-```
-will generate a semantic version and output it.
