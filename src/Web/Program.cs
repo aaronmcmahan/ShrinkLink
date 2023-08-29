@@ -1,9 +1,7 @@
 using Web.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Web.Models;
+using HashidsNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +16,9 @@ app.Run();
 static void RegisterServices(WebApplicationBuilder builder)
 {
     var services = builder.Services;
+
+    var settings = builder.Configuration.GetSection(nameof(LinkGeneration)).Get<LinkGeneration>();
+    services.AddSingleton<IHashids>(_ => new Hashids(settings.Salt, settings.MinLength));
 
     services.AddRazorPages();
     string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -48,9 +49,11 @@ static async Task ConfigureApplicationAsync(WebApplication app)
     app.UseAuthorization();
     app.MapRazorPages();
 
-    app.MapGet("/{slug}", async (string slug, ApplicationDbContext db) =>
-        await db.Links.SingleOrDefaultAsync(x => x.Slug == slug)
+    app.MapGet("/{code}", async (string code, ApplicationDbContext db, IHashids hashids) =>
+        await db.Links.FindAsync(hashids.DecodeSingle(code))
             is Link link
                 ? Results.Redirect(link.FullUrl, true, true)
                 : Results.NotFound());
 }
+
+public record LinkGeneration(string Salt, int MinLength);

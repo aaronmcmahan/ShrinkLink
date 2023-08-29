@@ -16,7 +16,7 @@ Project_Readme.html
 *.sln.docstates
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+*.db
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

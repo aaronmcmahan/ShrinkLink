@@ -2,6 +2,7 @@
 using Web.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.Common;
 
 namespace Web.Data;
 
@@ -17,52 +18,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Link> Links { get; set; } = null!;
 
-    public async Task BeginTransactionAsync()
-    {
-        if (_currentTransaction != null)
-        {
-            return;
-        }
+    // protected override void OnModelCreating(DbCommandBuilder builder)
+    // {
 
-        _currentTransaction = await Database.BeginTransactionAsync(IsolationLevel.ReadCommitted);
-    }
-
-    public async Task CommitTransactionAsync()
-    {
-        try
-        {
-            await SaveChangesAsync();
-
-            await (_currentTransaction?.CommitAsync() ?? Task.CompletedTask);
-        }
-        catch
-        {
-            RollbackTransaction();
-            throw;
-        }
-        finally
-        {
-            if (_currentTransaction != null)
-            {
-                _currentTransaction.Dispose();
-                _currentTransaction = null;
-            }
-        }
-    }
-
-    public void RollbackTransaction()
-    {
-        try
-        {
-            _currentTransaction?.Rollback();
-        }
-        finally
-        {
-            if (_currentTransaction != null)
-            {
-                _currentTransaction.Dispose();
-                _currentTransaction = null;
-            }
-        }
-    }
+    // }
 }
